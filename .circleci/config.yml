@@ -22,12 +22,11 @@ jobs:
 
             git diff --name-only $COMMITS | cut -d/ -f1 | sort -u > projects
             echo -e "Modified directories:\n`cat projects`\n"
-
-
-            # If modified directories contain Gopkg/vendor directores, build all projects and exit
+            
+            # If modified directories contain node_modules directories, build all projects and exit
             buildall=0
             for project in `cat projects`; do
-              if [[ ${project} =~ "Gopkg" || ${project} =~ "vendor" ]]; then
+              if [[ ${project} =~ "node_modules" ]]; then
                 buildall=1
                 echo -e "Dependencies change detected. building all $CIRCLE_PROJECT_REPONAME"
                 curl -s -u ${CIRCLE_TOKEN}: \
@@ -43,8 +42,9 @@ jobs:
 
             projects_inc_dep=(`cat projects`)
             echo -e "Calculating dependencies\n"
+            # Lists folders in current directory  
             for dir in `ls -d */`; do
-              for dep in `go list -f '{{ .Deps }}' ./${dir} 2>/dev/null`; do
+              for dep in `npm list ./${dir} 2>/dev/null`; do
                 for project_dep in `echo $dep | grep github.com/tufin/$CIRCLE_PROJECT_REPONAME | egrep -v "vendor|${dir%\/}"`; do
                   if [[ " ${projects_inc_dep[@]} " =~ " ${project_dep##*\/} " ]] && ! [[ " ${projects_inc_dep[@]} " =~ " ${dir%\/} " ]]; then
                     projects_inc_dep+=(${dir%\/})
