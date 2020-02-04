@@ -2,17 +2,17 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang
+      - image: josephpaulmckenzie/serverless-testing
     steps:
       - checkout
       - run:
           name: Determine which projects have changed and trigger the builds
           command: |
             # Identify modified directories
-            sudo apt-get install jq
+            
             LAST_SUCCESSFUL_BUILD_URL="https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH?filter=completed&limit=1"
             LAST_SUCCESSFUL_COMMIT=`curl -Ss -u "$CIRCLE_TOKEN:" $LAST_SUCCESSFUL_BUILD_URL | jq -r '.[0]["vcs_revision"]'`
-            
+
             #first commit in a branch
             if [[ ${LAST_SUCCESSFUL_COMMIT} == "null" ]]; then
               COMMITS="origin/master"
@@ -64,7 +64,7 @@ jobs:
   service1:
     working_directory: /go/src/github.com/tufin/circleci-monorepo
     docker:
-      - image: tufin/circleci-golang
+      - image: josephpaulmckenzie/serverless-testing
     environment:
       PROJECT_NAME: service1
       TEST_RESULTS: /tmp/test-results
@@ -86,7 +86,7 @@ jobs:
   service2:
     working_directory: /go/src/github.com/tufin/circleci-monorepo
     docker:
-      - image: tufin/circleci-golang
+      - image: josephpaulmckenzie/serverless-testing
     environment:
       PROJECT_NAME: service2
       TEST_RESULTS: /tmp/test-results
