@@ -17,6 +17,8 @@ jobs:
               echo -e "Not master branch, did not run circleci build process"
             fi
   service1:
+    docker:
+      - image: josephpaulmckenzie/serverless-testing
     steps:
       - checkout
       - run:
