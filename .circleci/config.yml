@@ -12,7 +12,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
               bash scripts/identify-modified-directories.sh
-              bash scripts/build_projects.sah
+              bash scripts/build_projects.sh
             else
               echo -e "Not master branch, did not run circleci build process"
             fi
