@@ -23,7 +23,33 @@ jobs:
       - run:
           name: Install Needed Packages 
           command: |
-            # /scripts/go_build.sh ${PROJECT_NAME} ${PROJECT_NAME}
+            npm install
+      - run:
+          name: Run Tests
+          command: |
+            # /scripts/go_test.sh ${TEST_RESULTS} ${PROJECT_NAME}
+      - run:
+          name: Deploy to AWS 
+          command: |
+            sls deploy
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
+      - store_test_results:
+          path: /tmp/test-results
+  service2:
+    working_directory: circleci-monorepo/service2
+    docker:
+      - image: josephpaulmckenzie/serverless-testing
+    environment:
+      PROJECT_NAME: service2
+      TEST_RESULTS: /tmp/test-results
+    steps:
+      - checkout
+      - run:
+          name: Install Needed Packages 
+          command: |
+            npm Install
       - run:
           name: Run Tests
           command: |
@@ -32,25 +58,6 @@ jobs:
           name: Deploy to AWS 
           command: |
             # /scripts/go_build.sh ${PROJECT_NAME} ${PROJECT_NAME}
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: raw-test-output
-      - store_test_results:
-          path: /tmp/test-results
-  service2:
-    working_directory: /go/src/github.com/tufin/circleci-monorepo
-    docker:
-      - image: josephpaulmckenzie/serverless-testing
-    environment:
-      PROJECT_NAME: service2
-      TEST_RESULTS: /tmp/test-results
-    steps:
-      - checkout 
-            /scripts/go_build.sh ${PROJECT_NAME} ${PROJECT_NAME}
-      - run:
-          name: Run Tests
-          command: |
-            /scripts/go_test.sh ${TEST_RESULTS} ${PROJECT_NAME}
       - store_artifacts:
           path: /tmp/test-results
           destination: raw-test-output
