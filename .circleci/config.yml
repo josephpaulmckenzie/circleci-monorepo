@@ -22,7 +22,7 @@ jobs:
 
             git diff --name-only $COMMITS | cut -d/ -f1 | sort -u > projects
             echo -e "Modified directories:\n`cat projects`\n"
-            
+            echo $CIRCLE_TOKEN
             # If modified directories contain node_modules directories, build all projects and exit
             buildall=0
             for project in `cat projects`; do
