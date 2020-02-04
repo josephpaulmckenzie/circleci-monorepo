@@ -17,6 +17,8 @@ jobs:
               echo -e "Not master branch, did not run circleci build process"
             fi
   service1:
+    steps:
+      - checkout
       - run:
           name: Start Build for service1
           command: |
