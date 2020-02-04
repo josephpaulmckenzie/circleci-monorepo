@@ -45,7 +45,7 @@ jobs:
             # Lists folders in current directory  
             for dir in `ls -d */`; do
               for dep in `npm list ./${dir} 2>/dev/null`; do
-                for project_dep in `echo $dep | grep github.com/tufin/$CIRCLE_PROJECT_REPONAME | egrep -v "vendor|${dir%\/}"`; do
+                for project_dep in `echo $dep | grep github.com/josephpaulmckenzie/$CIRCLE_PROJECT_REPONAME | egrep -v "vendor|${dir%\/}"`; do
                   if [[ " ${projects_inc_dep[@]} " =~ " ${project_dep##*\/} " ]] && ! [[ " ${projects_inc_dep[@]} " =~ " ${dir%\/} " ]]; then
                     projects_inc_dep+=(${dir%\/})
                   fi
@@ -74,11 +74,11 @@ jobs:
       - run:
           name: Build
           command: |
-            # /scripts/go_build.sh ${PROJECT_NAME} ${PROJECT_NAME}
+          echo "HI"
       - run:
           name: Run Tests
           command: |
-            # /scripts/go_test.sh ${TEST_RESULTS} ${PROJECT_NAME}
+          echo "HI"
       - store_artifacts:
           path: /tmp/test-results
           destination: raw-test-output
