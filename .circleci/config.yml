@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Install Needed Packages 
           command: |
-            npm Install
+            npm install
       - run:
           name: Run Tests
           command: |
