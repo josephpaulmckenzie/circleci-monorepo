@@ -71,13 +71,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build
+          name: Install Needed Packages 
           command: |
             # /scripts/go_build.sh ${PROJECT_NAME} ${PROJECT_NAME}
       - run:
           name: Run Tests
           command: |
             # /scripts/go_test.sh ${TEST_RESULTS} ${PROJECT_NAME}
+      - run:
+          name: Deploy to AWS 
+          command: |
+            # /scripts/go_build.sh ${PROJECT_NAME} ${PROJECT_NAME}
       - store_artifacts:
           path: /tmp/test-results
           destination: raw-test-output
