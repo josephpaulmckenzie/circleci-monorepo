@@ -74,11 +74,11 @@ jobs:
       - run:
           name: Build
           command: |
-            echo 'Build'
+            # /scripts/go_build.sh ${PROJECT_NAME} ${PROJECT_NAME}
       - run:
           name: Run Tests
           command: |
-          echo 'Tests'
+            # /scripts/go_test.sh ${TEST_RESULTS} ${PROJECT_NAME}
       - store_artifacts:
           path: /tmp/test-results
           destination: raw-test-output
