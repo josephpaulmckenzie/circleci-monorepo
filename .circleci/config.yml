@@ -8,8 +8,8 @@ jobs:
       - run:
           name: Determine which projects have changed and trigger the builds
           command: |
-            bash identify_modified-directories.sh
-            bash build_projects.sh
+            bash scripts/identify-modified-directories.sh
+            bash scripts/build_projects.sh
 
   service1:
     working_directory: circleci-monorepo/service1
