@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: josephpaulmckenzie/serverless-testing
+      - image: circleci/golang
     steps:
       - checkout
       - run:
@@ -64,7 +64,7 @@ jobs:
   service1:
     working_directory: /go/src/github.com/tufin/circleci-monorepo
     docker:
-      - image: josephpaulmckenzie/serverless-testing
+      - image: tufin/circleci-golang
     environment:
       PROJECT_NAME: service1
       TEST_RESULTS: /tmp/test-results
@@ -86,7 +86,7 @@ jobs:
   service2:
     working_directory: /go/src/github.com/tufin/circleci-monorepo
     docker:
-      - image: josephpaulmckenzie/serverless-testing
+      - image: tufin/circleci-golang
     environment:
       PROJECT_NAME: service2
       TEST_RESULTS: /tmp/test-results
