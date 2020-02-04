@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang
+      - image: josephpaulmckenzie/serverless-testing
     steps:
       - checkout
       - run:
@@ -22,7 +22,6 @@ jobs:
 
             git diff --name-only $COMMITS | cut -d/ -f1 | sort -u > projects
             echo -e "Modified directories:\n`cat projects`\n"
-            echo $CIRCLE_TOKEN
             # If modified directories contain node_modules directories, build all projects and exit
             buildall=0
             for project in `cat projects`; do
@@ -65,7 +64,7 @@ jobs:
   service1:
     working_directory: /go/src/github.com/tufin/circleci-monorepo
     docker:
-      - image: tufin/circleci-golang
+      - image: josephpaulmckenzie/serverless-testing
     environment:
       PROJECT_NAME: service1
       TEST_RESULTS: /tmp/test-results
@@ -87,7 +86,7 @@ jobs:
   service2:
     working_directory: /go/src/github.com/tufin/circleci-monorepo
     docker:
-      - image: tufin/circleci-golang
+      - image: josephpaulmckenzie/serverless-testing
     environment:
       PROJECT_NAME: service2
       TEST_RESULTS: /tmp/test-results
