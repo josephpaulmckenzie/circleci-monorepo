@@ -44,7 +44,7 @@ jobs:
             # Lists folders in current directory  
             for dir in `ls -d */`; do
               for dep in `npm list ./${dir} 2>/dev/null`; do
-                for project_dep in `echo $dep | grep github.com/josephpaulmckenzie/$CIRCLE_PROJECT_REPONAME | egrep -v "vendor|${dir%\/}"`; do
+                for project_dep in `echo $dep | grep github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME | egrep -v "vendor|${dir%\/}"`; do
                   if [[ " ${projects_inc_dep[@]} " =~ " ${project_dep##*\/} " ]] && ! [[ " ${projects_inc_dep[@]} " =~ " ${dir%\/} " ]]; then
                     projects_inc_dep+=(${dir%\/})
                   fi
@@ -62,7 +62,7 @@ jobs:
               fi
             done
   service1:
-    working_directory: /go/src/github.com/tufin/circleci-monorepo
+    working_directory: circleci-monorepo/service1
     docker:
       - image: josephpaulmckenzie/serverless-testing
     environment:
